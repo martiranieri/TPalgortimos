@@ -1,6 +1,6 @@
 module Main where
 import Test.HUnit
-import Solucion
+import Solucion 
 
 
 main = runTestTT tests

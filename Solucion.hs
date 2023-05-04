@@ -4,8 +4,6 @@
 {-# HLINT ignore "Use foldr" #-}
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 
-module Solucion where
-
 -- Completar con los datos del grupo
 --
 -- Nombre de Grupo: Undefined
@@ -13,6 +11,7 @@ module Solucion where
 -- Integrante 2: Lara Facundo Ignacio, facuriver57@gmail.com, 647/23
 -- Integrante 3: Miyasaki Camila Denise, camimiyasaki@gmail.com, 1063/22
 -- Integrante 4: Ranieri Martina Belén, martubranieri@gmail.com, 1118/22
+module Solucion where
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
