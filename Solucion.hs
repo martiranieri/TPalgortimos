@@ -66,8 +66,8 @@ amigosDe (_, relaciones, _ ) usuario = amigosDeAux relaciones usuario
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
 amigosDeAux [] _ = []
 amigosDeAux (xs:xss) usuario
-    | snd (snd xs) == snd usuario = fst xs : amigosDeAux xss usuario
-    | snd (fst xs) == snd usuario = snd xs : amigosDeAux xss usuario
+    | snd xs == usuario = fst xs : amigosDeAux xss usuario
+    | fst xs == usuario = snd xs : amigosDeAux xss usuario
     | otherwise = amigosDeAux xss usuario
 
 
