@@ -1,0 +1,26 @@
+-- 10.
+-- describir qué hace la función: .....
+existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
+existeSecuenciaDeAmigos red usuarioInicio usuarioFinal = seqDeAmigosAux red (amigosDe red usuarioInicio) usuarioFinal
+-- 
+seqDeAmigosAux :: RedSocial -> [Usuario] -> Usuario -> Bool
+seqDeAmigosAux _ [] _ = False
+seqDeAmigosAux red (xs:xss) usuarioFinal 
+    | xs == usuarioFinal = True
+    | otherwise = seqDeAmigosAux (quitarRelacionesDeRed red xs) xss usuarioFinal 
+
+quitarRelacionesDeRed :: RedSocial -> Usuario -> RedSocial
+quitarRelacionesDeRed (usuarios, [], publicaciones) _ = (usuarios, [], publicaciones)
+quitarRelacionesDeRed (usuarios, (x:xs), publicaciones) sacarUsuario
+    | u1 == sacarUsuario || u2 == sacarUsuario = quitarRelacionesDeRed (usuarios, xs, publicaciones) sacarUsuario
+    | otherwise = (usuarios, x : rs, publicaciones)
+    where
+        (u1, u2) = x
+        (usuarios, rs, publicaciones) = quitarRelacionesDeRed (usuarios, xs, publicaciones) sacarUsuario
+
+
+estaUsuario :: Usuario -> [Relacion] -> Bool
+estaUsuario _ [] = False
+estaUsuario usuario (xs:xss)
+    | usuario == fst xs || usuario == snd xs = True
+    | otherwise = estaUsuario usuario xss 
