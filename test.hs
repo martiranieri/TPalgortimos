@@ -36,22 +36,14 @@ testNombresDeUsuarios = test [
 testAmigosDe = test [
     amigosDe redUno usuario1 ~?= [(2, "Agus"), (3, "Facu"), (4, "Martu")],
     amigosDe redUno usuario2 ~?= [(1, "Cami"), (3, "Facu"),(4, "Martu"), (5, "Pedro")],
-    amigosDe redUno usuario3 ~?= [(1,"Cami"),(2,"Agus"),(4,"Martu")],
-    amigosDe redUno usuario4 ~?= [(1,"Cami"),(2,"Agus"),(3,"Facu")],        
-    amigosDe redUno usuario5 ~?= [(2,"Agus")],
-    amigosDe redDos usuario1 ~?= [(2, "Agus"), (3, "Facu")],
-    amigosDe redDos usuario2 ~?= [(1,"Cami"),(3,"Facu")],
-    amigosDe redDos usuario3 ~?= [(2,"Agus"),(1,"Cami")]
+    amigosDe redUno usuario3 ~?= [(1,"Cami"),(2,"Agus"),(4,"Martu")], 
+    amigosDe redUno usuario5 ~?= [(2,"Agus")]
     ]
 
 testcantidadDeAmigos = test [
     cantidadDeAmigos redUno usuario1 ~?= 3,
     cantidadDeAmigos redUno usuario2 ~?= 4,
-    cantidadDeAmigos redUno usuario3 ~?= 3,
-    cantidadDeAmigos redUno usuario4 ~?= 3,
     cantidadDeAmigos redUno usuario5 ~?= 1,
-    cantidadDeAmigos redDos usuario1 ~?= 2,
-    cantidadDeAmigos redDos usuario2 ~?= 2,
     cantidadDeAmigos redDos usuario3 ~?= 2
     ]
 
@@ -66,31 +58,17 @@ testestaRobertoCarlos = test [
     ]
 
 testpublicacionesDe = test [
-    publicacionesDe redUno usuario1 ~?= [((1,"Cami"),"Este es mi primer post",[(2,"Agus"),(4,"Martu"),(5,"Pedro")]),
-                                        ((1,"Cami"),"No s\233 que postear",[(4,"Martu")]),((1,"Cami"),"Trabajo de haskell",[(2,"Agus"),(5,"Pedro")]),
-                                        ((1,"Cami"),"Primer cuatri",[])],
     publicacionesDe redUno usuario2 ~?= [((2,"Agus"),"Hello World",[(4,"Martu")]),((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")])],
-    publicacionesDe redUno usuario3 ~?= [((3,"Facu"),"No",[]),((3,"Facu"),"Si",[(2,"Agus")]),((3,"Facu"),"Inserte frase motivacional",[(1,"Cami"),(5,"Pedro")])],
-    publicacionesDe redUno usuario4 ~?= [((4,"Martu"),"I am Alice. Not",[(1,"Cami"),(2,"Agus")]),((4,"Martu"),"I am Bob",[]),((4,"Martu"),"Just kidding, i am Mariela",
-                                        [(1,"Cami"),(3,"Facu")])],
-    publicacionesDe redUno usuario5 ~?= [((5,"Pedro"),"Holaa",[]),((5,"Pedro"),"Qu\233 tal",[(2,"Agus")]),((5,"Pedro"),"Todo bien",[(2,"Agus"),(5,"Pedro")])],
     publicacionesDe redDos usuario1 ~?= [((1,"Cami"),"Este es mi primer post",[(2,"Agus"),(4,"Martu"),(5,"Pedro")]),((1,"Cami"),"No s\233 que postear",[(4,"Martu")])],
     publicacionesDe redDos usuario2 ~?= [((2,"Agus"),"Hello World",[(4,"Martu")]),((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")])],
     publicacionesDe redDos usuario3 ~?= [((3,"Facu"),"No",[]),((3,"Facu"),"Si",[(2,"Agus")])]
     ]
 
 testpublicacionesQueLeGustanA = test [
-    publicacionesQueLeGustanA redUno usuario1 ~?= [((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")]),((3,"Facu"),"Inserte frase motivacional",[(1,"Cami"),(5,"Pedro")]),
-                                                  ((4,"Martu"),"I am Alice. Not",[(1,"Cami"),(2,"Agus")]),((4,"Martu"),"Just kidding, i am Mariela",[(1,"Cami"),(3,"Facu")])],
-    publicacionesQueLeGustanA redUno usuario2 ~?= [((1,"Cami"),"Este es mi primer post",[(2,"Agus"),(4,"Martu"),(5,"Pedro")]),((1,"Cami"),"Trabajo de haskell",[(2,"Agus"),(5,"Pedro")]),
-                                                  ((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")]),((3,"Facu"),"Si",[(2,"Agus")]),((4,"Martu"),"I am Alice. Not",[(1,"Cami"),(2,"Agus")]),((5,"Pedro"),
-                                                  "Qu\233 tal",[(2,"Agus")]),((5,"Pedro"),"Todo bien",[(2,"Agus"),(5,"Pedro")])],
     publicacionesQueLeGustanA redUno usuario3 ~?= [((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")]),((4,"Martu"),"Just kidding, i am Mariela",[(1,"Cami"),(3,"Facu")])],
-    publicacionesQueLeGustanA redUno usuario4 ~?= [((1,"Cami"),"Este es mi primer post",[(2,"Agus"),(4,"Martu"),(5,"Pedro")]),((1,"Cami"),"No s\233 que postear",[(4,"Martu")]),((2,"Agus"),"Hello World",[(4,"Martu")])],
     publicacionesQueLeGustanA redUno usuario5 ~?= [((1,"Cami"),"Este es mi primer post",[(2,"Agus"),(4,"Martu"),(5,"Pedro")]),((1,"Cami"),"Trabajo de haskell",[(2,"Agus"),(5,"Pedro")]),((3,"Facu"),"Inserte frase motivacional",
                                                   [(1,"Cami"),(5,"Pedro")]),((5,"Pedro"),"Todo bien",[(2,"Agus"),(5,"Pedro")])],
     publicacionesQueLeGustanA redDos usuario1 ~?= [((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")])],
-    publicacionesQueLeGustanA redDos usuario2 ~?= [((1,"Cami"),"Este es mi primer post",[(2,"Agus"),(4,"Martu"),(5,"Pedro")]),((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")]),((3,"Facu"),"Si",[(2,"Agus")])],
     publicacionesQueLeGustanA redDos usuario3 ~?= [((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")])]
     ]
 

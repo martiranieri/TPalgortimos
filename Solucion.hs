@@ -4,6 +4,8 @@
 {-# HLINT ignore "Use foldr" #-}
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 
+module Solucion where
+
 -- Completar con los datos del grupo
 --
 -- Nombre de Grupo: Undefined
@@ -11,12 +13,12 @@
 -- Integrante 2: Lara Facundo Ignacio, facuriver57@gmail.com, 647/23
 -- Integrante 3: Miyasaki Camila Denise, camimiyasaki@gmail.com, 1063/22
 -- Integrante 4: Ranieri Martina Belén, martubranieri@gmail.com, 1118/22
-module Solucion where
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
 type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicacion, likes)
 type RedSocial = ([Usuario], [Relacion], [Publicacion])
+
 
 -- Funciones basicas
 usuarios :: RedSocial -> [Usuario]
@@ -39,6 +41,7 @@ usuarioDePublicacion (u, _, _) = u
 
 likesDePublicacion :: Publicacion -> [Usuario]
 likesDePublicacion (_, _, us) = us
+
 
 -- Ejercicios:
 -- 1.
@@ -63,8 +66,8 @@ amigosDe (_, relaciones, _ ) usuario = amigosDeAux relaciones usuario
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
 amigosDeAux [] _ = []
 amigosDeAux (xs:xss) usuario
-    | nombreDeUsuario (snd xs) == nombreDeUsuario usuario = fst xs : amigosDeAux xss usuario
-    | nombreDeUsuario (fst xs) == nombreDeUsuario usuario = snd xs : amigosDeAux xss usuario
+    | snd (snd xs) == snd usuario = fst xs : amigosDeAux xss usuario
+    | snd (fst xs) == snd usuario = snd xs : amigosDeAux xss usuario
     | otherwise = amigosDeAux xss usuario
 
 
@@ -119,8 +122,7 @@ tieneMasDeUnMillonAmigos (xs:xss)
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe (_,_,publicaciones) usuario = publicacionesDeAux publicaciones usuario
 
--- Realiza recursión dentro de todas las publicaciones de la red devolviendo en la lista únicamente las 
--- del usuario ingresado
+-- Realiza recursión dentro de todas las publicaciones de la red devolviendo en la lista únicamente las del usuario ingresado
 publicacionesDeAux :: [Publicacion] -> Usuario -> [Publicacion]
 publicacionesDeAux [] _ = []
 publicacionesDeAux (xs:xss) usuario 
@@ -143,31 +145,43 @@ leGustaA (xs:xss) usuario
 -- Devuelve True si el elemento está en la lista y False en otro caso
 pertenece :: (Eq t) => t -> [t] -> Bool 
 pertenece _ [] = False 
-pertenece n (x : xs) | n == x = True
-                     | otherwise = pertenece n xs
+pertenece n (x : xs) 
+    | n == x = True
+    | otherwise = pertenece n xs
 
 
 -- 8.
--- Dados dos usuarios y una red, devuelve true y ambos usuarios le dieron like a las mismas publicaciones.
--- En otro caso false
+-- Dados dos usuarios y una red, decide si ambos usuarios le dieron like a las mismas publicaciones
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueLeGustanA red us1) (publicacionesQueLeGustanA red us2)
 
 -- Decide si, dadas dos listas, estas tienen los mismos elementos (sin importar el orden)
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
 mismosElementos [] _ = True
-mismosElementos (x:xs) s | not (pertenece x s) = False
-                         | otherwise = mismosElementos xs s
+mismosElementos (x:xs) s 
+    | not (pertenece x s) = False
+    | otherwise = mismosElementos xs s
 
 
 -- 9.
--- describir qué hace la función: .....
+-- Decide si existe entre los amigos de un usuario en una red, alguien que le haya dado me gusta a todas las publicaciones del mismo.
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
-tieneUnSeguidorFiel = undefined
+tieneUnSeguidorFiel red usuario = aAlguienLeGustanTodasLasPub (amigosDe red usuario) (publicacionesDe red usuario)
 
+-- Hace recursion sobre una lista de usuarios y decide si alguno le dio me gusta a todas las publicaciones de otra lista.
+aAlguienLeGustanTodasLasPub :: [Usuario] -> [Publicacion] -> Bool
+aAlguienLeGustanTodasLasPub [] _ = False
+aAlguienLeGustanTodasLasPub (x:xs) publicaciones 
+    | leGustanTodasLasPub publicaciones x = True
+    | otherwise = aAlguienLeGustanTodasLasPub xs publicaciones
 
+-- Decide si un usuario le dio me gusta a todas las publicaciones de una lista.
+leGustanTodasLasPub :: [Publicacion] -> Usuario -> Bool
+leGustanTodasLasPub [] usuario = True
+leGustanTodasLasPub (xs:xss) usuario 
+    | pertenece usuario (likesDePublicacion xs) = leGustanTodasLasPub xss usuario
+    | otherwise = False
+ 
+ 
 -- 10.
 -- describir qué hace la función: .....
-existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
-existeSecuenciaDeAmigos = undefined
-
