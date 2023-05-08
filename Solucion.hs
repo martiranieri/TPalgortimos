@@ -6,6 +6,47 @@
 
 module Solucion where
 
+usuario1 = (1, "Juan")
+usuario2 = (2, "Natalia")
+usuario3 = (3, "Pedro")
+usuario4 = (4, "Mariela")
+usuario5 = (5, "Natalia")
+
+relacion1_2 = (usuario1, usuario2)
+relacion1_3 = (usuario1, usuario3)
+relacion1_4 = (usuario4, usuario1) -- Notar que el orden en el que aparecen los usuarios es indistinto
+relacion2_3 = (usuario3, usuario2)
+relacion2_4 = (usuario2, usuario4)
+relacion3_4 = (usuario4, usuario3)
+
+publicacion1_1 = (usuario1, "Este es mi primer post", [usuario2, usuario4])
+publicacion1_2 = (usuario1, "Este es mi segundo post", [usuario4])
+publicacion1_3 = (usuario1, "Este es mi tercer post", [usuario2, usuario5])
+publicacion1_4 = (usuario1, "Este es mi cuarto post", [])
+publicacion1_5 = (usuario1, "Este es como mi quinto post", [usuario5])
+
+publicacion2_1 = (usuario2, "Hello World", [usuario4])
+publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario4])
+
+publicacion3_1 = (usuario3, "Lorem Ipsum", [])
+publicacion3_2 = (usuario3, "dolor sit amet", [usuario2])
+publicacion3_3 = (usuario3, "consectetur adipiscing elit", [usuario2, usuario5])
+
+publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
+publicacion4_2 = (usuario4, "I am Bob", [])
+publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
+
+
+usuariosA = [usuario1, usuario2, usuario3, usuario4]
+relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
+publicacionesA = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
+redA = (usuariosA, relacionesA, publicacionesA)
+
+usuariosB = [usuario1, usuario2, usuario3, usuario4, usuario5]
+relacionesB = [relacion1_2, relacion2_3, relacion3_4]
+publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
+redB = (usuariosB, relacionesB, publicacionesB)
+
 -- Completar con los datos del grupo
 --
 -- Nombre de Grupo: Undefined
@@ -66,8 +107,8 @@ amigosDe (_, relaciones, _ ) usuario = amigosDeAux relaciones usuario
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
 amigosDeAux [] _ = []
 amigosDeAux (xs:xss) usuario
-    | snd (snd xs) == snd usuario = fst xs : amigosDeAux xss usuario
-    | snd (fst xs) == snd usuario = snd xs : amigosDeAux xss usuario
+    | snd xs ==  usuario = fst xs : amigosDeAux xss usuario
+    | fst xs ==  usuario = snd xs : amigosDeAux xss usuario
     | otherwise = amigosDeAux xss usuario
 
 
@@ -185,3 +226,23 @@ leGustanTodasLasPub (xs:xss) usuario
  
 -- 10.
 -- describir qué hace la función: .....
+existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
+existeSecuenciaDeAmigos red usuarioInicio usuarioFinal = seqDeAmigosAux red (amigosDe red usuarioInicio) usuarioFinal
+-- 
+seqDeAmigosAux :: RedSocial -> [Usuario] -> Usuario -> Bool
+seqDeAmigosAux _ [] _ = False
+seqDeAmigosAux red (xs:xss) usuarioFinal 
+    | xs == usuarioFinal = True
+    | otherwise = seqDeAmigosAux (quitarRelacionesDeRed red xs) xss usuarioFinal 
+
+quitarRelacionesDeRed :: RedSocial -> Usuario -> RedSocial
+quitarRelacionesDeRed (usuario, (xs:xss), publicaciones) sacarUsuario 
+    | not (estaUsuario sacarUsuario (xs:xss)) = (usuario, (xs:xss), publicaciones)
+    | sacarUsuario == fst xs || sacarUsuario == snd xs = quitarRelacionesDeRed (usuario, xss, publicaciones) sacarUsuario
+    | otherwise = quitarRelacionesDeRed (usuario, xs : xss, publicaciones) sacarUsuario
+
+estaUsuario :: Usuario -> [Relacion] -> Bool
+estaUsuario _ [] = False
+estaUsuario usuario (xs:xss)
+    | usuario == fst xs || usuario == snd xs = True
+    | otherwise = estaUsuario usuario xss 
