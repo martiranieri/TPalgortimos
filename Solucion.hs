@@ -237,7 +237,7 @@ seqDeAmigosAux red (xs:xss) usuarioFinal
 
 quitarRelacionesDeRed :: RedSocial -> Usuario -> RedSocial
 quitarRelacionesDeRed (usuario, (xs:xss), publicaciones) sacarUsuario 
-    | not (estaUsuario sacarUsuario (xs:xss)) = (usuario, (xs:xss), publicaciones)
+    | not (estaUsuario sacarUsuario (xs:xss)) = (eliminarUser usuario sacarUsuario, (xs:xss), publicaciones)
     | sacarUsuario == fst xs || sacarUsuario == snd xs = quitarRelacionesDeRed (usuario, xss, publicaciones) sacarUsuario
     | otherwise = quitarRelacionesDeRed (usuario, xs : xss, publicaciones) sacarUsuario
 
@@ -246,3 +246,9 @@ estaUsuario _ [] = False
 estaUsuario usuario (xs:xss)
     | usuario == fst xs || usuario == snd xs = True
     | otherwise = estaUsuario usuario xss 
+
+eliminarUser :: [Usuario] -> Usuario -> [Usuario]
+eliminarUser [] _ = []
+eliminarUser (xs:xss) usuario 
+    | xs /= usuario = xs : eliminarUser xss usuario
+    | otherwise = eliminarUser xss usuario
