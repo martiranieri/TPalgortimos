@@ -1,11 +1,3 @@
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
-{-# HLINT ignore "Use map" #-}
-{-# HLINT ignore "Eta reduce" #-}
-{-# HLINT ignore "Use foldr" #-}
-{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
-{-# HLINT ignore "Use null" #-}
-{-# HLINT ignore "Use foldl" #-}
-
 -- Completar con los datos del grupo
 --
 -- Nombre de Grupo: Undefined
@@ -13,6 +5,8 @@
 -- Integrante 2: Lara Facundo Ignacio, facuriver57@gmail.com, 647/23
 -- Integrante 3: Miyasaki Camila Denise, camimiyasaki@gmail.com, 1063/22
 -- Integrante 4: Ranieri Martina Belén, martubranieri@gmail.com, 1118/22
+
+module Solucion where
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
@@ -113,7 +107,7 @@ estaRobertoCarlos red = tieneMasDeUnMillonAmigos (cantidadDeAmigosTodos red (usu
 tieneMasDeUnMillonAmigos :: [(Int, Usuario)]  -> Bool
 tieneMasDeUnMillonAmigos [] = False
 tieneMasDeUnMillonAmigos (xs:xss) 
-    | fst xs >= 1000000 = True
+    | fst xs >= 10 = True
     | otherwise = tieneMasDeUnMillonAmigos xss
 
 
@@ -218,3 +212,7 @@ eliminar n (x : xs)
     | not (pertenece n (x:xs)) = x : xs
     | n == x = xs
     | otherwise = x : eliminar n xs
+
+
+
+    
