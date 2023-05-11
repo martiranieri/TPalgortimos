@@ -3,8 +3,8 @@
 {-# HLINT ignore "Eta reduce" #-}
 {-# HLINT ignore "Use foldr" #-}
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
-
-module Solucion where
+{-# HLINT ignore "Use null" #-}
+{-# HLINT ignore "Use foldl" #-}
 
 -- Completar con los datos del grupo
 --
@@ -66,8 +66,8 @@ amigosDe (_, relaciones, _ ) usuario = amigosDeAux relaciones usuario
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
 amigosDeAux [] _ = []
 amigosDeAux (xs:xss) usuario
-    | snd (snd xs) == snd usuario = fst xs : amigosDeAux xss usuario
-    | snd (fst xs) == snd usuario = snd xs : amigosDeAux xss usuario
+    | snd xs == usuario = fst xs : amigosDeAux xss usuario
+    | fst xs == usuario = snd xs : amigosDeAux xss usuario
     | otherwise = amigosDeAux xss usuario
 
 
@@ -143,7 +143,7 @@ leGustaA (xs:xss) usuario
     | otherwise =  leGustaA xss usuario
 
 -- Devuelve True si el elemento está en la lista y False en otro caso
-pertenece :: (Eq t) => t -> [t] -> Bool 
+pertenece :: Eq t => t -> [t] -> Bool 
 pertenece _ [] = False 
 pertenece n (x : xs) 
     | n == x = True
@@ -185,3 +185,36 @@ leGustanTodasLasPub (xs:xss) usuario
  
 -- 10.
 -- describir qué hace la función: .....
+existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
+existeSecuenciaDeAmigos red u1 u2 
+    | sonAmigos u1 u2 red = True
+    | amigosDe red u2 == [] = False 
+    | otherwise = hayCadenaDeAmigos (eliminarDeLaRed red u1) (amigosDe red u1) u2
+
+hayCadenaDeAmigos :: RedSocial -> [Usuario] -> Usuario -> Bool
+hayCadenaDeAmigos _ [] _ = False
+hayCadenaDeAmigos red (u : us) u2 = existeSecuenciaDeAmigos red u u2 
+
+sonAmigos :: Usuario -> Usuario -> RedSocial -> Bool
+sonAmigos u1 u2 red = pertenece u1 (amigosDe red u2)
+
+eliminarDeLaRed :: RedSocial -> Usuario -> RedSocial
+eliminarDeLaRed (us, rs, ps) u = (eliminar u us, eliminarTodos (relacionesDe u red) rs , ps)
+                               where red = (us, rs, ps)
+
+relacionesDe :: Usuario -> RedSocial -> [Relacion]
+relacionesDe _ (_, [], _) = []
+relacionesDe u (us, x : xs, ps) 
+    | fst x == u || snd x == u = x : relacionesDe u (us, xs, ps)
+    | otherwise = relacionesDe u (us, xs, ps)
+
+eliminarTodos :: Eq t => [t] -> [t] -> [t]
+eliminarTodos [] xss = xss
+eliminarTodos (x : xs) xss = eliminarTodos xs (eliminar x xss)
+
+eliminar :: Eq t => t -> [t] -> [t]
+eliminar _ [] = []
+eliminar n (x : xs) 
+    | not (pertenece n (x:xs)) = x : xs
+    | n == x = xs
+    | otherwise = x : eliminar n xs
