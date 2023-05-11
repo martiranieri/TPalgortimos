@@ -52,7 +52,7 @@ nombresDeUsuarios (usuarios, _, _) = proyectarNombres usuarios
 -- Realiza la recursión de la lista de usuarios registrados en la red para saber su nombre
 proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
-proyectarNombres (xs:xss) = nombreDeUsuario xs : proyectarNombres xss
+proyectarNombres (x:xs) = nombreDeUsuario x : proyectarNombres xs
 
 -- 2.
 -- Devuelve lista de usuarios que están relacionados con el usuario ingresado como parámetro
@@ -63,10 +63,10 @@ amigosDe (_, relaciones, _ ) usuario = amigosDeAux relaciones usuario
 -- el usuario ingresado. Si está, agrega a la lista el nombre del otro usuario (con el que está relacionado)
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
 amigosDeAux [] _ = []
-amigosDeAux (xs:xss) usuario
-    | snd xs == usuario = fst xs : amigosDeAux xss usuario
-    | fst xs == usuario = snd xs : amigosDeAux xss usuario
-    | otherwise = amigosDeAux xss usuario
+amigosDeAux (x:xs) usuario
+    | snd x == usuario = fst x : amigosDeAux xs usuario
+    | fst x == usuario = snd x : amigosDeAux xs usuario
+    | otherwise = amigosDeAux xs usuario
 
 
 -- 3.
@@ -76,8 +76,7 @@ cantidadDeAmigos redSocial usuario = longitud (amigosDe redSocial usuario)
 
 longitud :: [a] -> Int
 longitud [] = 0
-longitud (x:xss) = 1 + longitud xss
-
+longitud (x:xs) = 1 + longitud xs
 
 -- 4.
 -- Devuelve al usuario con más relaciones en la red ingresada como parámetro
@@ -88,7 +87,7 @@ usuarioConMasAmigos red = maximoDeAmigos (cantidadDeAmigosTodos red (usuarios re
 -- y en la segunda los datos del usuario. Lo realiza con recusión
 cantidadDeAmigosTodos :: RedSocial -> [Usuario] -> [(Int, Usuario)]
 cantidadDeAmigosTodos _ [] = []
-cantidadDeAmigosTodos y (xs:xss)  = (cantidadDeAmigos y xs, xs) : cantidadDeAmigosTodos y xss
+cantidadDeAmigosTodos y (x:xs)  = (cantidadDeAmigos y x, x) : cantidadDeAmigosTodos y xs
 
 -- Compara primeros dos elementos de la lista hasta llegar a uno solo, el que tiene más relaciones
 maximoDeAmigos :: [(Int, Usuario)] -> Usuario
@@ -106,9 +105,9 @@ estaRobertoCarlos red = tieneMasDeUnMillonAmigos (cantidadDeAmigosTodos red (usu
 -- si algún usuario tiene al menos diez relaciones (primer posición de cada dupla) devuelve True y sino False
 tieneMasDeUnMillonAmigos :: [(Int, Usuario)]  -> Bool
 tieneMasDeUnMillonAmigos [] = False
-tieneMasDeUnMillonAmigos (xs:xss) 
-    | fst xs >= 10 = True
-    | otherwise = tieneMasDeUnMillonAmigos xss
+tieneMasDeUnMillonAmigos (x:xs) 
+    | fst x >= 10 = True
+    | otherwise = tieneMasDeUnMillonAmigos xs
 
 -- 6.
 -- Devuelve una lista con todas las publicaciones del usuario en la red
@@ -118,9 +117,9 @@ publicacionesDe (_,_,publicaciones) usuario = publicacionesDeAux publicaciones u
 -- Realiza recursión dentro de todas las publicaciones de la red devolviendo en la lista únicamente con las del usuario ingresado
 publicacionesDeAux :: [Publicacion] -> Usuario -> [Publicacion]
 publicacionesDeAux [] _ = []
-publicacionesDeAux (xs:xss) usuario 
-    | usuarioDePublicacion xs == usuario = xs : publicacionesDeAux xss usuario
-    | otherwise = publicacionesDeAux xss usuario
+publicacionesDeAux (x:xs) usuario 
+    | usuarioDePublicacion x == usuario = x : publicacionesDeAux xs usuario
+    | otherwise = publicacionesDeAux xs usuario
 
 -- 7.
 -- Dada una red social y un usuario, devuelve una lista con las publicaciones a las que ese usuario le dio like.
@@ -130,14 +129,14 @@ publicacionesQueLeGustanA (_, _, publicaciones) usuario = leGustaA publicaciones
 -- Realiza recursión sobre todas las publicaciones y devuelve lista con las publicaciones que el usuario le dio like
 leGustaA :: [Publicacion] -> Usuario -> [Publicacion]
 leGustaA [] _ = []
-leGustaA (xs:xss) usuario 
-    | pertenece usuario (likesDePublicacion xs) = xs : leGustaA xss usuario
-    | otherwise =  leGustaA xss usuario
+leGustaA (x:xs) usuario 
+    | pertenece usuario (likesDePublicacion x) = x : leGustaA xs usuario
+    | otherwise =  leGustaA xs usuario
 
 -- Devuelve True si el elemento está en la lista y False en otro caso
 pertenece :: Eq t => t -> [t] -> Bool 
 pertenece _ [] = False 
-pertenece n (x : xs) 
+pertenece n (x:xs) 
     | n == x = True
     | otherwise = pertenece n xs
 
@@ -168,8 +167,8 @@ aAlguienLeGustanTodasLasPub (x:xs) publicaciones
 -- Decide si un usuario le dio me gusta a todas las publicaciones de una lista.
 leGustanTodasLasPub :: [Publicacion] -> Usuario -> Bool
 leGustanTodasLasPub [] usuario = True
-leGustanTodasLasPub (xs:xss) usuario 
-    | pertenece usuario (likesDePublicacion xs) = leGustanTodasLasPub xss usuario
+leGustanTodasLasPub (x:xs) usuario 
+    | pertenece usuario (likesDePublicacion x) = leGustanTodasLasPub xs usuario
     | otherwise = False
  
  
@@ -185,7 +184,7 @@ existeSecuenciaDeAmigos red u1 u2
 -- Dada una lista y un usuario, prueba si se forma una cadena de relaciones entre algun usuario de la lista y el usuario dado
 hayCadenaDeAmigos :: RedSocial -> [Usuario] -> Usuario -> Bool
 hayCadenaDeAmigos _ [] _ = False
-hayCadenaDeAmigos red (u : us) u2 = existeSecuenciaDeAmigos red u u2 
+hayCadenaDeAmigos red (u:us) u2 = existeSecuenciaDeAmigos red u u2 
 
 sonAmigos :: Usuario -> Usuario -> RedSocial -> Bool
 sonAmigos u1 u2 red = pertenece u1 (amigosDe red u2)
@@ -204,11 +203,11 @@ relacionesDe u (us, x : xs, ps)
 
 eliminarTodos :: Eq t => [t] -> [t] -> [t]
 eliminarTodos [] xss = xss
-eliminarTodos (x : xs) xss = eliminarTodos xs (eliminar x xss)
+eliminarTodos (x:xs) xss = eliminarTodos xs (eliminar x xss)
 
 eliminar :: Eq t => t -> [t] -> [t]
 eliminar _ [] = []
-eliminar n (x : xs) 
+eliminar n (x:xs) 
     | not (pertenece n (x:xs)) = x : xs
     | n == x = xs
     | otherwise = x : eliminar n xs
