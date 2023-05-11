@@ -1,6 +1,7 @@
 module Main where
 import Test.HUnit
 import Solucion 
+import Solucion (existeSecuenciaDeAmigos)
 
 
 main = runTestTT tests
@@ -20,11 +21,11 @@ tests = test [
 
     " publicacionesQueLeGustanA " ~: testpublicacionesQueLeGustanA,
 
-    " lesGustanLasMismasPublicaciones" ~: testlesGustanLasMismasPublicaciones
+    " lesGustanLasMismasPublicaciones" ~: testlesGustanLasMismasPublicaciones,
 
-    -- " tieneUnSeguidorFiel 1" ~: tieneUnSeguidorFiel redA usuario1 ~?= True,
+    " tieneUnSeguidorFiel" ~: testTieneUnSeguidorFiel,
 
-    --" existeSecuenciaDeAmigos 1" ~: existeSecuenciaDeAmigos redA usuario1 usuario3 ~?= True
+    " existeSecuenciaDeAmigos" ~: testExisteSecuenciaDeAmigos
  ]
 
 
@@ -68,9 +69,17 @@ testlesGustanLasMismasPublicaciones = test [
     lesGustanLasMismasPublicaciones redDos usuario1 usuario2 ~?= True
     ]
 
-testtieneUnSeguidorFiel = test [
+testTieneUnSeguidorFiel = test [
     tieneUnSeguidorFiel redUno usuario2 ~?= True,
     tieneUnSeguidorFiel redUno usuario5 ~?= False
+    ]
+
+
+testExisteSecuenciaDeAmigos = test [
+    existeSecuenciaDeAmigos redUno usuario1 usuario4 ~?= True, --relacionados directamente
+    existeSecuenciaDeAmigos redUno usuario1 usuario5 ~?= True, --relacionados por amigos
+    existeSecuenciaDeAmigos redUno usuario5 usuario1 ~?= True, --mismo que "relacionados directamente" pero con los usuarios en orden indistinto
+    existeSecuenciaDeAmigos redDos usuario1 usuario7 ~?= False --usuario7 no tiene amigos/relaciones, tiene que dar False
     ]
 
 -- Datos:
