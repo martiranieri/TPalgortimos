@@ -1,6 +1,7 @@
 module Main where
 import Test.HUnit
 import Solucion 
+import Solucion (existeSecuenciaDeAmigos)
 
 
 main = runTestTT tests
@@ -20,16 +21,16 @@ tests = test [
 
     " publicacionesQueLeGustanA " ~: testpublicacionesQueLeGustanA,
 
-    " lesGustanLasMismasPublicaciones" ~: testlesGustanLasMismasPublicaciones
+    " lesGustanLasMismasPublicaciones" ~: testlesGustanLasMismasPublicaciones,
 
     -- " tieneUnSeguidorFiel 1" ~: tieneUnSeguidorFiel redA usuario1 ~?= True,
 
-    -- " existeSecuenciaDeAmigos 1" ~: existeSecuenciaDeAmigos redA usuario1 usuario3 ~?= True
+    " existeSecuenciaDeAmigos" ~: testExisteSecuenciaDeAmigos
  ]
 
 
 testNombresDeUsuarios = test [
-    nombresDeUsuarios redUno ~?= ["Cami","Agus","Facu","Martu","Pedro"],
+    nombresDeUsuarios redUno ~?= ["Cami","Agus","Facu","Martu","Pedro","Messi"],
     nombresDeUsuarios redDos ~?= ["Cami","Agus","Facu"]
     ]
 
@@ -77,6 +78,17 @@ testlesGustanLasMismasPublicaciones = test [
     lesGustanLasMismasPublicaciones redDos usuario1 usuario2 ~?= True
     ]
 
+testExisteSecuenciaDeAmigos = test [
+    existeSecuenciaDeAmigos redUno usuario1 usuario4 ~?= True,
+    existeSecuenciaDeAmigos redDos usuario2 usuario3 ~?= True,
+    existeSecuenciaDeAmigos redUno usuario1 usuario5 ~?= True,
+    existeSecuenciaDeAmigos redDos usuario3 usuario1 ~?= True,
+    existeSecuenciaDeAmigos redUno usuario4 usuario1 ~?= True,
+    existeSecuenciaDeAmigos redDos usuario3 usuario2 ~?= True,
+    existeSecuenciaDeAmigos redUno usuario5 usuario1 ~?= True,
+    existeSecuenciaDeAmigos redDos usuario1 usuario3 ~?= True,
+    existeSecuenciaDeAmigos redUno usuario1 usuario6 ~?= False
+    ]
 
 -- Datos:
 usuario1 = (1, "Cami")
@@ -84,6 +96,7 @@ usuario2 = (2, "Agus")
 usuario3 = (3, "Facu")
 usuario4 = (4, "Martu")
 usuario5 = (5, "Pedro")
+usuario6 = (6, "Messi")
 
 
 relacion1_2 = (usuario1, usuario2)
@@ -108,7 +121,7 @@ publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario3, usuario2])
 
 publicacion3_1 = (usuario3, "No", [])
 publicacion3_2 = (usuario3, "Si", [usuario2])
-publicacion3_3 = (usuario3, "Inserte frase motivacional", [usuario1, usuario5])
+publicacion3_3 = (usuario3, "Mensaje Subliminal", [usuario1, usuario5])
 
 publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
 publicacion4_2 = (usuario4, "I am Bob", [])
@@ -119,7 +132,7 @@ publicacion5_2 = (usuario5, "Qué tal", [usuario2])
 publicacion5_3 = (usuario5, "Todo bien", [usuario2, usuario5])
 
 
-usuariosPrimerRed = [usuario1, usuario2, usuario3, usuario4, usuario5]
+usuariosPrimerRed = [usuario1, usuario2, usuario3, usuario4, usuario5, usuario6]
 relacionesPrimerRed = [relacion1_2, relacion1_3, relacion1_4, relacion2_3, relacion2_4, relacion3_4, relacion2_5]
 publicacionesPrimerRed = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion1_4, publicacion2_1, publicacion2_2,
                           publicacion3_1, publicacion3_2, publicacion3_3, publicacion4_1, publicacion4_2,
@@ -131,10 +144,3 @@ usuariosSegundaRed = [usuario1, usuario2, usuario3]
 relacionesSegundaRed = [relacion1_2, relacion2_3, relacion1_3]
 publicacionesSegundaRed = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2]
 redDos = (usuariosSegundaRed, relacionesSegundaRed, publicacionesSegundaRed)
-
-
-
-
-
-
-
