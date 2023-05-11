@@ -204,9 +204,9 @@ eliminarRelacionYUser (us, rs, ps) u = (eliminar u us, eliminarTodos (relaciones
 -- Devuelve la lista de relaciones de una red en las que participa el usuario
 relacionesDe :: Usuario -> RedSocial -> [Relacion]
 relacionesDe _ (_, [], _) = []
-relacionesDe u (us, x:xs, ps) 
-    | fst x == u || snd x == u = x : relacionesDe u (us, xs, ps)
-    | otherwise = relacionesDe u (us, xs, ps)
+relacionesDe u (us, r:rs, ps) 
+    | fst r == u || snd r == u = r : relacionesDe u (us, rs, ps)
+    | otherwise = relacionesDe u (us, rs, ps)
 
 eliminarTodos :: Eq t => [t] -> [t] -> [t]
 eliminarTodos [] xss = xss
