@@ -1,8 +1,6 @@
 module Main where
 import Test.HUnit
 import Solucion 
-import Solucion (existeSecuenciaDeAmigos)
-
 
 main = runTestTT tests
 
