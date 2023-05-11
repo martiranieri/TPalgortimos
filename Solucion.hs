@@ -65,9 +65,9 @@ amigosDe (_, rs, _ ) u = relacionadoCon rs u
 relacionadoCon :: [Relacion] -> Usuario -> [Usuario]
 relacionadoCon [] _ = []
 relacionadoCon (r : rs) u
-    | snd r == u = fst r : amigosDeAux rs u
-    | fst r == u = snd r : amigosDeAux rs u
-    | otherwise = amigosDeAux rs u
+    | snd r == u = fst r : relacionadoCon rs u
+    | fst r == u = snd r : relacionadoCon rs u
+    | otherwise = relacionadoCon rs u
 
 
 -- 3.
