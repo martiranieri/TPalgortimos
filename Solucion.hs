@@ -60,7 +60,7 @@ amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe (_, relaciones, _ ) usuario = amigosDeAux relaciones usuario
 
 -- Realiza la recursión sobre las relaciones de la red comparando si en alguna de las dos posiciones se encuentra
--- el usuario ingresado. Si está, agrega a la lista el nombre del otro usuario (con el que está relacionado)
+-- el usuario ingresado. Si está, agrega a la lista el nombre del usuario con el que está relacionado
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
 amigosDeAux [] _ = []
 amigosDeAux (x:xs) usuario
@@ -83,8 +83,8 @@ longitud (x:xs) = 1 + longitud xs
 usuarioConMasAmigos :: RedSocial -> Usuario
 usuarioConMasAmigos red = maximoDeAmigos (cantidadDeAmigosTodos red (usuarios red))
 
--- Devuelve una lista con duplas dentro. En la primer posición, cuántas relaciones tiene el usuario
--- y en la segunda los datos del usuario. Lo realiza con recusión
+-- Devuelve una lista de duplas. Para cada usuario de la red devuelve, en la primer posición de la dupla,
+-- cuántas relaciones tiene y, en la segunda, los datos del usuario. 
 cantidadDeAmigosTodos :: RedSocial -> [Usuario] -> [(Int, Usuario)]
 cantidadDeAmigosTodos _ [] = []
 cantidadDeAmigosTodos y (x:xs)  = (cantidadDeAmigos y x, x) : cantidadDeAmigosTodos y xs
