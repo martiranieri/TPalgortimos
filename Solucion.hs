@@ -174,25 +174,28 @@ leGustanTodasLasPub (xs:xss) usuario
  
  
 -- 10.
--- Dados dos usuarios dentro de la misma red nos dice si es posible con las relaciones del primer usuario llegar al segundo
+-- Dados dos usuarios dentro de una misma red, decide si es posible llegar del primero al segundo mediante una cadena de relaciones
+-- Para eso, se fija si los usuarios se relacionan directamente y si no, prueba si la cadena continua con alguno de los amigos del primero
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red u1 u2 
     | sonAmigos u1 u2 red = True
     | amigosDe red u2 == [] = False 
     | otherwise = hayCadenaDeAmigos (eliminarRelacionYUser red u1) (amigosDe red u1) u2
 
+-- Dada una lista y un usuario, prueba si se forma una cadena de relaciones entre algun usuario de la lista y el usuario dado
 hayCadenaDeAmigos :: RedSocial -> [Usuario] -> Usuario -> Bool
 hayCadenaDeAmigos _ [] _ = False
 hayCadenaDeAmigos red (u : us) u2 = existeSecuenciaDeAmigos red u u2 
 
-
 sonAmigos :: Usuario -> Usuario -> RedSocial -> Bool
 sonAmigos u1 u2 red = pertenece u1 (amigosDe red u2)
 
+-- Elimina a un usuario y a sus relaciones de una red social
 eliminarRelacionYUser :: RedSocial -> Usuario -> RedSocial
 eliminarRelacionYUser (us, rs, ps) u = (eliminar u us, eliminarTodos (relacionesDe u red) rs , ps)
-                               where red = (us, rs, ps)
+                                     where red = (us, rs, ps)
 
+-- Devuelve la lista de relaciones de una red en las que participa el usuario
 relacionesDe :: Usuario -> RedSocial -> [Relacion]
 relacionesDe _ (_, [], _) = []
 relacionesDe u (us, x : xs, ps) 
