@@ -54,12 +54,12 @@ testestaRobertoCarlos = test [
     ]
 
 testpublicacionesDe = test [
-    publicacionesDe redUno usuario2 ~?= [((2,"Agus"),"Hello World",[(4,"Martu")]),((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")])],
+    publicacionesDe redUno usuario2 ~?= [((2,"Agus"),"Hello World",[(4,"Martu")]),((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(4,"Martu"),(5,"Pedro"),(6,"Ramon"),(7,"Jorge"),(8,"Silvina"),(9,"Agustin"),(10,"Colo"),(11,"Martin")])],
     publicacionesDe redDos usuario7 ~?= [] 
     ]
 
 testpublicacionesQueLeGustanA = test [
-    publicacionesQueLeGustanA redUno usuario3 ~?= [((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(2,"Agus")]),((4,"Martu"),"Just kidding, i am Mariela",[(1,"Cami"),(3,"Facu")])],
+    publicacionesQueLeGustanA redUno usuario7 ~?= [((2,"Agus"),"Good Bye World",[(1,"Cami"),(3,"Facu"),(4,"Martu"),(5,"Pedro"),(6,"Ramon"),(7,"Jorge"),(8,"Silvina"),(9,"Agustin"),(10,"Colo"),(11,"Martin")])],
     publicacionesQueLeGustanA redDos usuario7 ~=? []
     ]
 
@@ -110,7 +110,7 @@ publicacion1_3 = (usuario1, "Trabajo de haskell", [usuario2, usuario5])
 publicacion1_4 = (usuario1, "Primer cuatri", [])
 
 publicacion2_1 = (usuario2, "Hello World", [usuario4])
-publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario3, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10,usuario11])
+publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10,usuario11])
 
 publicacion3_1 = (usuario3, "No", [])
 publicacion3_2 = (usuario3, "Si", [usuario2])

@@ -103,26 +103,24 @@ estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos red = tieneMasDeUnMillonAmigos (cantidadDeAmigosTodos red (usuarios red))
 
 -- Recibe lista que en cada dupla tiene: (cantidad de relaciones, datos del usuario con esas relaciones)
--- si algún usuario tiene al menos un millón de relaciones (primer posición de cada dupla) devuelve True y sino False
+-- si algún usuario tiene al menos diez relaciones (primer posición de cada dupla) devuelve True y sino False
 tieneMasDeUnMillonAmigos :: [(Int, Usuario)]  -> Bool
 tieneMasDeUnMillonAmigos [] = False
 tieneMasDeUnMillonAmigos (xs:xss) 
     | fst xs >= 10 = True
     | otherwise = tieneMasDeUnMillonAmigos xss
 
-
 -- 6.
--- Dada una red social y un usuario, devuelve una lista con todas las publicaciones de ese usuario en la red ingresada
+-- Devuelve una lista con todas las publicaciones del usuario en la red
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe (_,_,publicaciones) usuario = publicacionesDeAux publicaciones usuario
 
--- Realiza recursión dentro de todas las publicaciones de la red devolviendo en la lista únicamente las del usuario ingresado
+-- Realiza recursión dentro de todas las publicaciones de la red devolviendo en la lista únicamente con las del usuario ingresado
 publicacionesDeAux :: [Publicacion] -> Usuario -> [Publicacion]
 publicacionesDeAux [] _ = []
 publicacionesDeAux (xs:xss) usuario 
     | usuarioDePublicacion xs == usuario = xs : publicacionesDeAux xss usuario
     | otherwise = publicacionesDeAux xss usuario
-
 
 -- 7.
 -- Dada una red social y un usuario, devuelve una lista con las publicaciones a las que ese usuario le dio like.
@@ -143,7 +141,6 @@ pertenece n (x : xs)
     | n == x = True
     | otherwise = pertenece n xs
 
-
 -- 8.
 -- Dados dos usuarios y una red, decide si ambos usuarios le dieron like a las mismas publicaciones
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
@@ -155,7 +152,6 @@ mismosElementos [] _ = True
 mismosElementos (x:xs) s 
     | not (pertenece x s) = False
     | otherwise = mismosElementos xs s
-
 
 -- 9.
 -- Decide si existe entre los amigos de un usuario en una red, alguien que le haya dado me gusta a todas las publicaciones del mismo.
