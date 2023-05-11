@@ -1,3 +1,9 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use map" #-}
+{-# HLINT ignore "Eta reduce" #-}
+{-# HLINT ignore "Use foldr" #-}
+{-# HLINT ignore "Use null" #-}
+{-# HLINT ignore "Use foldl" #-}
 -- Completar con los datos del grupo
 --
 -- Nombre de Grupo: Undefined
@@ -5,6 +11,7 @@
 -- Integrante 2: Lara Facundo Ignacio, facuriver57@gmail.com, 647/23
 -- Integrante 3: Miyasaki Camila Denise, camimiyasaki@gmail.com, 1063/22
 -- Integrante 4: Ranieri Martina Belén, martubranieri@gmail.com, 1118/22
+
 
 module Solucion where
 
@@ -36,7 +43,6 @@ usuarioDePublicacion (u, _, _) = u
 likesDePublicacion :: Publicacion -> [Usuario]
 likesDePublicacion (_, _, us) = us
 
-
 -- Ejercicios:
 -- 1.
 -- Devuelve una lista con todos los nombres de todos los usuarios registrados en la red
@@ -44,11 +50,9 @@ nombresDeUsuarios :: RedSocial -> [String]
 nombresDeUsuarios (usuarios, _, _) = proyectarNombres usuarios
 
 -- Realiza la recursión de la lista de usuarios registrados en la red para saber su nombre
--- el nombre se encuentra en la segunda posición de la dupla de datos del Usuario
 proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
 proyectarNombres (xs:xss) = nombreDeUsuario xs : proyectarNombres xss
-
 
 -- 2.
 -- Devuelve lista de usuarios que están relacionados con el usuario ingresado como parámetro
@@ -70,7 +74,6 @@ amigosDeAux (xs:xss) usuario
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos redSocial usuario = longitud (amigosDe redSocial usuario)
 
--- Devuelve el longitud de la lista ingresada
 longitud :: [a] -> Int
 longitud [] = 0
 longitud (x:xss) = 1 + longitud xss
@@ -87,15 +90,12 @@ cantidadDeAmigosTodos :: RedSocial -> [Usuario] -> [(Int, Usuario)]
 cantidadDeAmigosTodos _ [] = []
 cantidadDeAmigosTodos y (xs:xss)  = (cantidadDeAmigos y xs, xs) : cantidadDeAmigosTodos y xss
 
--- Devuelve el usuario con más relaciones en la red. Compara la primer posiciónde las duplas
--- (#relaciones en la red) con otra dupla y descarta la menor hasta obtener una única dupla
--- devolviendo la segunda posición de la dupla, los datos del usuario final
+-- Compara primeros dos elementos de la lista hasta llegar a uno solo, el que tiene más relaciones
 maximoDeAmigos :: [(Int, Usuario)] -> Usuario
-maximoDeAmigos [x] = snd x
+maximoDeAmigos [x] = snd x 
 maximoDeAmigos (x:xs)
     | fst x >= fst (head xs) = maximoDeAmigos (x : tail xs)
     | otherwise = maximoDeAmigos xs
-
 
 -- 5.
 -- Si existe al menos un usuario con un millón o más de relaciones, devuelve True. En otro caso False
@@ -178,22 +178,23 @@ leGustanTodasLasPub (xs:xss) usuario
  
  
 -- 10.
--- describir qué hace la función: .....
+-- Dados dos usuarios dentro de la misma red nos dice si es posible con las relaciones del primer usuario llegar al segundo
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red u1 u2 
     | sonAmigos u1 u2 red = True
     | amigosDe red u2 == [] = False 
-    | otherwise = hayCadenaDeAmigos (eliminarDeLaRed red u1) (amigosDe red u1) u2
+    | otherwise = hayCadenaDeAmigos (eliminarRelacionYUser red u1) (amigosDe red u1) u2
 
 hayCadenaDeAmigos :: RedSocial -> [Usuario] -> Usuario -> Bool
 hayCadenaDeAmigos _ [] _ = False
 hayCadenaDeAmigos red (u : us) u2 = existeSecuenciaDeAmigos red u u2 
 
+
 sonAmigos :: Usuario -> Usuario -> RedSocial -> Bool
 sonAmigos u1 u2 red = pertenece u1 (amigosDe red u2)
 
-eliminarDeLaRed :: RedSocial -> Usuario -> RedSocial
-eliminarDeLaRed (us, rs, ps) u = (eliminar u us, eliminarTodos (relacionesDe u red) rs , ps)
+eliminarRelacionYUser :: RedSocial -> Usuario -> RedSocial
+eliminarRelacionYUser (us, rs, ps) u = (eliminar u us, eliminarTodos (relacionesDe u red) rs , ps)
                                where red = (us, rs, ps)
 
 relacionesDe :: Usuario -> RedSocial -> [Relacion]
@@ -212,7 +213,3 @@ eliminar n (x : xs)
     | not (pertenece n (x:xs)) = x : xs
     | n == x = xs
     | otherwise = x : eliminar n xs
-
-
-
-    
