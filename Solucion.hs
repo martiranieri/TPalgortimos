@@ -146,9 +146,10 @@ pertenece n (x : xs)
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red us1 us2 = mismosElementos (publicacionesQueLeGustanA red us1) (publicacionesQueLeGustanA red us2)
 
+
 -- Decide si, dadas dos listas, estas tienen los mismos elementos (sin importar el orden)
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos [] _ = True
+mismosElementos [] _ = False
 mismosElementos (x:xs) s 
     | not (pertenece x s) = False
     | otherwise = mismosElementos xs s

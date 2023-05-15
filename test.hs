@@ -20,11 +20,11 @@ tests = test [
 
     " publicacionesQueLeGustanA " ~: testpublicacionesQueLeGustanA,
 
-    " lesGustanLasMismasPublicaciones" ~: testlesGustanLasMismasPublicaciones
+    " lesGustanLasMismasPublicaciones" ~: testlesGustanLasMismasPublicaciones,
 
-    -- " tieneUnSeguidorFiel 1" ~: tieneUnSeguidorFiel redA usuario1 ~?= True,
+    " tieneUnSeguidorFiel 1" ~: testtieneUnSeguidorFiel,
 
-    --" existeSecuenciaDeAmigos 1" ~: existeSecuenciaDeAmigos redA usuario1 usuario3 ~?= True
+    " existeSecuenciaDeAmigos 1" ~: testexisteSecuenciaDeAmigos
  ]
 
 
@@ -71,6 +71,12 @@ testlesGustanLasMismasPublicaciones = test [
 testtieneUnSeguidorFiel = test [
     tieneUnSeguidorFiel redUno usuario2 ~?= True,
     tieneUnSeguidorFiel redUno usuario5 ~?= False
+    ]
+
+testexisteSecuenciaDeAmigos = test [
+    existeSecuenciaDeAmigos redUno usuario1 usuario9 ~?= True, -- relacion no directa
+    existeSecuenciaDeAmigos redDos usuario1 usuario2 ~?= True, -- relacion directo
+    existeSecuenciaDeAmigos redDos usuario1 usuario7 ~?= False
     ]
 
 -- Datos:
