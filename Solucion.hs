@@ -75,7 +75,7 @@ relacionadoCon (r : rs) u
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos red u = longitud (amigosDe red u)
 
-longitud :: [a] -> Int
+longitud :: [t] -> Int
 longitud [] = 0
 longitud (x : xs) = 1 + longitud xs
 
