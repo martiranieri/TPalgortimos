@@ -153,10 +153,15 @@ lesGustanLasMismasPublicaciones red u1 u2 = mismosElementos (publicacionesQueLeG
 
 -- Decide si, dadas dos listas, estas tienen los mismos elementos (sin importar el orden)
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos [] _ = True
-mismosElementos (x : xs) s 
-    | not (pertenece x s) = False
-    | otherwise = mismosElementos xs s
+mismosElementos [] _ = False
+mismosElementos (x : xs) s | xs == [] = True 
+                           | not (pertenece x s) = False
+                           | otherwise = mismosElementos xs s
+
+--mismosElementos [] _ = True
+--mismosElementos (x : xs) s 
+--    | not (pertenece x s) = False
+--    | otherwise = mismosElementos xs s
 
 
 -- 9.

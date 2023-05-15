@@ -64,7 +64,11 @@ testpublicacionesQueLeGustanA = test [
 
 testlesGustanLasMismasPublicaciones = test [
     lesGustanLasMismasPublicaciones redUno usuario1 usuario2 ~?= False,
-    lesGustanLasMismasPublicaciones redDos usuario1 usuario2 ~?= True
+    lesGustanLasMismasPublicaciones redUno usuario2 usuario1 ~?= False, -- caso que los usuarios estén al revés 
+    lesGustanLasMismasPublicaciones redDos usuario1 usuario2 ~?= False, -- caso que uno de los usuarios no tenga likes
+    lesGustanLasMismasPublicaciones redDos usuario2 usuario1 ~?= False,
+    lesGustanLasMismasPublicaciones redDos usuario2 usuario5 ~?= True,
+    lesGustanLasMismasPublicaciones redDos usuario5 usuario2 ~?= True
     ]
 
 testTieneUnSeguidorFiel = test [
@@ -120,7 +124,7 @@ publicacion2_1 = (usuario2, "Hello World", [usuario4])
 publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10,usuario11])
 
 publicacion3_1 = (usuario3, "No", [])
-publicacion3_2 = (usuario3, "Si", [usuario2])
+publicacion3_2 = (usuario3, "Si", [usuario2, usuario5]) -- agregué el like del usuario5
 publicacion3_3 = (usuario3, "Inserte frase motivacional", [usuario1, usuario5])
 
 publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
