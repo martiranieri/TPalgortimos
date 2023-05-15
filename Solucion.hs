@@ -158,12 +158,6 @@ mismosElementos (x : xs) s | xs == [] = True
                            | not (pertenece x s) = False
                            | otherwise = mismosElementos xs s
 
---mismosElementos [] _ = True
---mismosElementos (x : xs) s 
---    | not (pertenece x s) = False
---    | otherwise = mismosElementos xs s
-
-
 -- 9.
 -- Decide si existe entre los amigos de un usuario en una red, alguien que le haya dado me gusta a todas las publicaciones del mismo.
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
