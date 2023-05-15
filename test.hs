@@ -2,7 +2,6 @@ module Main where
 import Test.HUnit
 import Solucion 
 
-
 main = runTestTT tests
 
 tests = test [
@@ -22,9 +21,9 @@ tests = test [
 
     " lesGustanLasMismasPublicaciones" ~: testlesGustanLasMismasPublicaciones,
 
-    " tieneUnSeguidorFiel 1" ~: testtieneUnSeguidorFiel,
+    " tieneUnSeguidorFiel" ~: testTieneUnSeguidorFiel,
 
-    " existeSecuenciaDeAmigos 1" ~: testexisteSecuenciaDeAmigos
+    " existeSecuenciaDeAmigos" ~: testExisteSecuenciaDeAmigos
  ]
 
 
@@ -65,18 +64,24 @@ testpublicacionesQueLeGustanA = test [
 
 testlesGustanLasMismasPublicaciones = test [
     lesGustanLasMismasPublicaciones redUno usuario1 usuario2 ~?= False,
-    lesGustanLasMismasPublicaciones redDos usuario1 usuario2 ~?= True
+    lesGustanLasMismasPublicaciones redUno usuario2 usuario1 ~?= False, -- caso que los usuarios estén al revés 
+    lesGustanLasMismasPublicaciones redDos usuario1 usuario2 ~?= False, -- caso que uno de los usuarios no tenga likes
+    lesGustanLasMismasPublicaciones redDos usuario2 usuario1 ~?= False,
+    lesGustanLasMismasPublicaciones redDos usuario2 usuario5 ~?= True,
+    lesGustanLasMismasPublicaciones redDos usuario5 usuario2 ~?= True
     ]
 
-testtieneUnSeguidorFiel = test [
+testTieneUnSeguidorFiel = test [
     tieneUnSeguidorFiel redUno usuario2 ~?= True,
     tieneUnSeguidorFiel redUno usuario5 ~?= False
     ]
 
-testexisteSecuenciaDeAmigos = test [
-    existeSecuenciaDeAmigos redUno usuario1 usuario9 ~?= True, -- relacion no directa
-    existeSecuenciaDeAmigos redDos usuario1 usuario2 ~?= True, -- relacion directo
-    existeSecuenciaDeAmigos redDos usuario1 usuario7 ~?= False
+
+testExisteSecuenciaDeAmigos = test [
+    existeSecuenciaDeAmigos redUno usuario1 usuario4 ~?= True, --relacionados directamente
+    existeSecuenciaDeAmigos redUno usuario1 usuario5 ~?= True, --relacionados por amigos
+    existeSecuenciaDeAmigos redUno usuario5 usuario1 ~?= True, --mismo que "relacionados directamente" pero con los usuarios en orden indistinto
+    existeSecuenciaDeAmigos redDos usuario1 usuario7 ~?= False --usuario7 no tiene amigos/relaciones, tiene que dar False
     ]
 
 -- Datos:
@@ -119,7 +124,7 @@ publicacion2_1 = (usuario2, "Hello World", [usuario4])
 publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10,usuario11])
 
 publicacion3_1 = (usuario3, "No", [])
-publicacion3_2 = (usuario3, "Si", [usuario2])
+publicacion3_2 = (usuario3, "Si", [usuario2, usuario5]) -- agregué el like del usuario5
 publicacion3_3 = (usuario3, "Inserte frase motivacional", [usuario1, usuario5])
 
 publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
