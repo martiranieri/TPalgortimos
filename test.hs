@@ -64,9 +64,10 @@ testpublicacionesQueLeGustanA = test [
 
 testlesGustanLasMismasPublicaciones = test [
     lesGustanLasMismasPublicaciones redUno usuario1 usuario2 ~?= False,
-    lesGustanLasMismasPublicaciones redUno usuario2 usuario1 ~?= False, -- caso que los usuarios estén al revés 
     lesGustanLasMismasPublicaciones redDos usuario1 usuario2 ~?= False, -- caso que uno de los usuarios no tenga likes
     lesGustanLasMismasPublicaciones redDos usuario2 usuario1 ~?= False,
+    lesGustanLasMismasPublicaciones redDos usuario6 usuario7 ~?= True, -- si ninguno tiene likes
+    lesGustanLasMismasPublicaciones redDos usuario4 usuario8 ~?= False,-- caso que los dos usuarios tengan los mismos likes pero uno tenga más que el otro
     lesGustanLasMismasPublicaciones redDos usuario2 usuario5 ~?= True,
     lesGustanLasMismasPublicaciones redDos usuario5 usuario2 ~?= True
     ]
@@ -107,16 +108,16 @@ relacion3_4 = (usuario4, usuario3)
 relacion4_5 = (usuario3, usuario5)
 relacion2_5 = (usuario2, usuario5)
 
-relacion2_6 = (usuario2,usuario6)
-relacion2_7 = (usuario2,usuario7)
-relacion2_8 = (usuario2,usuario8)
-relacion2_9 = (usuario2,usuario9)
-relacion2_10 = (usuario2,usuario10)
+relacion2_6 = (usuario2, usuario6)
+relacion2_7 = (usuario2, usuario7)
+relacion2_8 = (usuario2, usuario8)
+relacion2_9 = (usuario2, usuario9)
+relacion2_10 = (usuario2, usuario10)
 
-relacion2_11 = (usuario2,usuario11)
+relacion2_11 = (usuario2, usuario11)
 
 publicacion1_1 = (usuario1, "Este es mi primer post", [usuario2, usuario4, usuario5])
-publicacion1_2 = (usuario1, "No sé que postear", [usuario4])
+publicacion1_2 = (usuario1, "No sé que postear", [usuario4, usuario8])
 publicacion1_3 = (usuario1, "Trabajo de haskell", [usuario2, usuario5])
 publicacion1_4 = (usuario1, "Primer cuatri", [])
 
@@ -124,7 +125,7 @@ publicacion2_1 = (usuario2, "Hello World", [usuario4])
 publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10,usuario11])
 
 publicacion3_1 = (usuario3, "No", [])
-publicacion3_2 = (usuario3, "Si", [usuario2, usuario5]) -- agregué el like del usuario5
+publicacion3_2 = (usuario3, "Si", [usuario2, usuario5]) -- agregué el like del usuario5 
 publicacion3_3 = (usuario3, "Inserte frase motivacional", [usuario1, usuario5])
 
 publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
@@ -144,8 +145,8 @@ publicacionesPrimerRed = [publicacion1_1, publicacion1_2, publicacion1_3, public
 redUno = (usuariosPrimerRed, relacionesPrimerRed, publicacionesPrimerRed)
 
 
-usuariosSegundaRed = [usuario1, usuario2, usuario3, usuario7]
-relacionesSegundaRed = [relacion1_2, relacion2_3, relacion1_3]
+usuariosSegundaRed = [usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8] -- agrego el usuario5, usuario6 y usuario8 a la red
+relacionesSegundaRed = [relacion1_2, relacion2_3, relacion1_3] 
 publicacionesSegundaRed = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion3_1, publicacion3_2]
 redDos = (usuariosSegundaRed, relacionesSegundaRed, publicacionesSegundaRed)
 
