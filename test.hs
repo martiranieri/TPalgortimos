@@ -142,7 +142,7 @@ publicacion5_2 = (usuario5, "Qué tal", [usuario2])
 publicacion5_3 = (usuario5, "Todo bien", [usuario2, usuario5])
 
 
-usuariosPrimerRed = [usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10]
+usuariosPrimerRed = [usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10, usuario11]
 relacionesPrimerRed = [relacion1_2, relacion1_3, relacion1_4, relacion2_3, relacion2_4, relacion3_4, relacion2_5, relacion2_6, relacion2_7, relacion2_8, relacion2_8, relacion2_10, relacion2_11]
 publicacionesPrimerRed = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion1_4, publicacion2_1, publicacion2_2,
                           publicacion3_1, publicacion3_2, publicacion3_3, publicacion4_1, publicacion4_2,
@@ -150,7 +150,7 @@ publicacionesPrimerRed = [publicacion1_1, publicacion1_2, publicacion1_3, public
 redUno = (usuariosPrimerRed, relacionesPrimerRed, publicacionesPrimerRed)
 
 
-usuariosSegundaRed = [usuario1, usuario2, usuario3, usuario4, usuario5] 
+usuariosSegundaRed = [usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10, usuario11] 
 relacionesSegundaRed = [relacion1_2, relacion2_3, relacion1_3] 
 publicacionesSegundaRed = [publicacion1_1, publicacion1_3, publicacion2_1, publicacion3_1, publicacion3_2]
 redDos = (usuariosSegundaRed, relacionesSegundaRed, publicacionesSegundaRed)
