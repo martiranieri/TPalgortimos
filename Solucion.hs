@@ -221,3 +221,4 @@ eliminar n (x : xs)
     | not (pertenece n (x:xs)) = x : xs
     | n == x = xs
     | otherwise = x : eliminar n xs
+
