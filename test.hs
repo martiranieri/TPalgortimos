@@ -101,7 +101,7 @@ usuario7 = (7, "Jorge")
 usuario8 = (8, "Silvina")
 usuario9 = (9, "Agustin")
 usuario10 = (10, "Colo")
-usuario11= (11, "Martin")
+usuario11 = (11, "Martin")
 
 
 relacion1_2 = (usuario1, usuario2)
