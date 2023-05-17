@@ -117,7 +117,7 @@ relacion2_10 = (usuario2, usuario10)
 relacion2_11 = (usuario2, usuario11)
 
 publicacion1_1 = (usuario1, "Este es mi primer post", [usuario2, usuario4, usuario5])
-publicacion1_2 = (usuario1, "No sé que postear", [usuario4, usuario8])
+publicacion1_2 = (usuario1, "No sé que postear", [usuario4, usuario8]) -- agregué like usuario8
 publicacion1_3 = (usuario1, "Trabajo de haskell", [usuario2, usuario5])
 publicacion1_4 = (usuario1, "Primer cuatri", [])
 
