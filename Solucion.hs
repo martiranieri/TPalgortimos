@@ -152,11 +152,15 @@ lesGustanLasMismasPublicaciones red u1 u2 = mismosElementos (publicacionesQueLeG
 
 -- Decide si, dadas dos listas, estas tienen los mismos elementos (sin importar el orden)
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos [] _ = False
-mismosElementos (x : xs) s 
-    | xs == [] = True 
+mismosElementos x s 
+    | longitud x == longitud s = incluidosEn x s
+    | otherwise = False
+
+incluidosEn :: (Eq t) => [t] -> [t] -> Bool
+incluidosEn [] _ = True
+incluidosEn (x : xs) s 
     | not (pertenece x s) = False
-    | otherwise = mismosElementos xs s
+    | otherwise = incluidosEn xs s
 
 -- 9.
 -- Decide si existe entre los amigos de un usuario en una red, alguien que le haya dado me gusta a todas las publicaciones del mismo.
