@@ -45,7 +45,7 @@ likesDePublicacion (_, _, us) = us
 
 -- Ejercicios:
 -- 1.
--- Devuelve una lista con todos los nombres de todos los usuarios registrados en la red
+-- Devuelve una lista con todos los nombres, sin repetir, de los usuarios registrados en la red
 nombresDeUsuarios :: RedSocial -> [String]
 nombresDeUsuarios (us, _, _) = eliminarRepetidos (proyectarNombres us)
 
