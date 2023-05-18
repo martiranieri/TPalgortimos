@@ -56,14 +56,11 @@ proyectarNombres (u : us) = nombreDeUsuario u : proyectarNombres us
 
 eliminarRepetidos :: (Eq t) => [t] -> [t]
 eliminarRepetidos [] = []
-eliminarRepetidos (x : xs) | pertenece x xs = eliminarRepetidos (x : quitarTodos x xs)
-                           | otherwise = x : eliminarRepetidos xs
+eliminarRepetidos (x : xs) 
+    | pertenece x xs = eliminarRepetidos (x : eliminar x xs)
+    | otherwise = x : eliminarRepetidos xs
 
-quitarTodos :: (Eq t ) => t -> [t] -> [t]
-quitarTodos n s | not (pertenece n s) = s
-                | otherwise = quitarTodos n (eliminar n s)
-
-eliminar :: Eq t => t -> [t] -> [t]
+eliminar :: (Eq t) => t -> [t] -> [t]
 eliminar _ [] = []
 eliminar n (x : xs) 
     | not (pertenece n (x:xs)) = x : xs
@@ -161,6 +158,7 @@ pertenece n (x : xs)
     | n == x = True
     | otherwise = pertenece n xs
 
+
 -- 8.
 -- Dados dos usuarios y una red, decide si ambos usuarios le dieron like a las mismas publicaciones
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
@@ -177,6 +175,7 @@ incluidosEn [] _ = True
 incluidosEn (x : xs) s 
     | not (pertenece x s) = False
     | otherwise = incluidosEn xs s
+
 
 -- 9.
 -- Decide si existe entre los amigos de un usuario en una red, alguien que le haya dado me gusta a todas las publicaciones del mismo.
@@ -217,7 +216,7 @@ sonAmigos u1 u2 red = pertenece u1 (amigosDe red u2)
 
 -- Elimina a un usuario y a sus relaciones de una red social
 eliminarRelacionYUser :: RedSocial -> Usuario -> RedSocial
-eliminarRelacionYUser (us, rs, ps) u = (eliminar u us, eliminarTodos (relacionesDe u red) rs , ps)
+eliminarRelacionYUser (us, rs, ps) u = (eliminar u us, eliminarTodosLista (relacionesDe u red) rs , ps)
                                      where red = (us, rs, ps)
 
 -- Devuelve la lista de relaciones de una red en las que participa el usuario
@@ -227,6 +226,6 @@ relacionesDe u (us, r:rs, ps)
     | fst r == u || snd r == u = r : relacionesDe u (us, rs, ps)
     | otherwise = relacionesDe u (us, rs, ps)
 
-eliminarTodos :: Eq t => [t] -> [t] -> [t]
-eliminarTodos [] xss = xss
-eliminarTodos (x : xs) xss = eliminarTodos xs (eliminar x xss)
+eliminarTodosLista :: Eq t => [t] -> [t] -> [t]
+eliminarTodosLista [] xss = xss
+eliminarTodosLista (x : xs) xss = eliminarTodosLista xs (eliminar x xss)
