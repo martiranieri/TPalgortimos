@@ -56,12 +56,14 @@ proyectarNombres (u : us) = nombreDeUsuario u : proyectarNombres us
 
 eliminarRepetidos :: (Eq t) => [t] -> [t]
 eliminarRepetidos [] = []
-eliminarRepetidos (x : xs) | pertenece x xs = eliminarRepetidos (x : quitarTodos x xs)
-                           | otherwise = x : eliminarRepetidos xs
+eliminarRepetidos (x : xs) 
+    | pertenece x xs = eliminarRepetidos (x : quitarTodos x xs)
+    | otherwise = x : eliminarRepetidos xs
 
 quitarTodos :: (Eq t ) => t -> [t] -> [t]
-quitarTodos n s | not (pertenece n s) = s
-                | otherwise = quitarTodos n (eliminar n s)
+quitarTodos n s
+    | not (pertenece n s) = s
+    | otherwise = quitarTodos n (eliminar n s)
 
 eliminar :: Eq t => t -> [t] -> [t]
 eliminar _ [] = []
