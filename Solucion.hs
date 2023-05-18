@@ -47,12 +47,27 @@ likesDePublicacion (_, _, us) = us
 -- 1.
 -- Devuelve una lista con todos los nombres de todos los usuarios registrados en la red
 nombresDeUsuarios :: RedSocial -> [String]
-nombresDeUsuarios (us, _, _) = proyectarNombres us
+nombresDeUsuarios (us, _, _) = eliminarRepetidos (proyectarNombres us)
 
 -- Realiza la recursión de la lista de usuarios registrados en la red para saber su nombre
 proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
 proyectarNombres (u : us) = nombreDeUsuario u : proyectarNombres us
+
+eliminarRepetidos :: (Eq t) => [t] -> [t]
+eliminarRepetidos (x : xs) | pertenece x xs = eliminarRepetidos (x : quitarTodos x xs)
+                           | otherwise = x : eliminarRepetidos xs
+
+quitarTodos :: (Eq t ) => t -> [t] -> [t]
+quitarTodos n s | not (pertenece n s) = s
+                | otherwise = quitarTodos n (eliminar n s)
+
+eliminar :: Eq t => t -> [t] -> [t]
+eliminar _ [] = []
+eliminar n (x : xs) 
+    | not (pertenece n (x:xs)) = x : xs
+    | n == x = xs
+    | otherwise = x : eliminar n xs
 
 
 -- 2.
@@ -214,11 +229,3 @@ relacionesDe u (us, r:rs, ps)
 eliminarTodos :: Eq t => [t] -> [t] -> [t]
 eliminarTodos [] xss = xss
 eliminarTodos (x : xs) xss = eliminarTodos xs (eliminar x xss)
-
-eliminar :: Eq t => t -> [t] -> [t]
-eliminar _ [] = []
-eliminar n (x : xs) 
-    | not (pertenece n (x:xs)) = x : xs
-    | n == x = xs
-    | otherwise = x : eliminar n xs
-
