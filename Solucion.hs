@@ -60,7 +60,7 @@ eliminarRepetidos (x : xs)
     | pertenece x xs = eliminarRepetidos (x : eliminar x xs)
     | otherwise = x : eliminarRepetidos xs
 
-eliminar :: (Eq t) => t -> [t] -> [t]
+eliminar :: Eq t => t -> [t] -> [t]
 eliminar _ [] = []
 eliminar n (x : xs) 
     | not (pertenece n (x:xs)) = x : xs
