@@ -216,7 +216,7 @@ sonAmigos u1 u2 red = pertenece u1 (amigosDe red u2)
 
 -- Elimina a un usuario y a sus relaciones de una red social
 eliminarRelacionYUser :: RedSocial -> Usuario -> RedSocial
-eliminarRelacionYUser (us, rs, ps) u = (eliminar u us, eliminarTodosLista (relacionesDe u red) rs , ps)
+eliminarRelacionYUser (us, rs, ps) u = (eliminar u us, eliminaPrimeraAparicionDeTodos (relacionesDe u red) rs , ps)
                                      where red = (us, rs, ps)
 
 -- Devuelve la lista de relaciones de una red en las que participa el usuario
@@ -226,6 +226,6 @@ relacionesDe u (us, r:rs, ps)
     | fst r == u || snd r == u = r : relacionesDe u (us, rs, ps)
     | otherwise = relacionesDe u (us, rs, ps)
 
-eliminarTodosLista :: Eq t => [t] -> [t] -> [t]
-eliminarTodosLista [] xss = xss
-eliminarTodosLista (x : xs) xss = eliminarTodosLista xs (eliminar x xss)
+eliminaPrimeraAparicionDeTodos :: Eq t => [t] -> [t] -> [t]
+eliminaPrimeraAparicionDeTodos [] xss = xss
+eliminaPrimeraAparicionDeTodos (x : xs) xss = eliminaPrimeraAparicionDeTodos xs (eliminar x xss)
