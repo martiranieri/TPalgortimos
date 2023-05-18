@@ -28,7 +28,7 @@ tests = test [
 
 
 testNombresDeUsuarios = test [
-    -- Caso red con usuarios
+    -- Caso red con usuarios (y usuarios con nombres repetidos)
     nombresDeUsuarios redUno ~?= ["Cami","Agus","Facu","Martu","Pedro","Ramon","Jorge","Silvina","Agustin","Colo","Martin"], 
     nombresDeUsuarios redTres ~?= [] -- Caso red vacía
     ]
