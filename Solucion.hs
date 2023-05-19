@@ -202,6 +202,7 @@ leGustanTodasLasPub (p : ps) u
 -- Para eso, se fija si los usuarios se relacionan directamente y si no, prueba si la cadena continua con alguno de los amigos del primero
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red u1 u2 
+    | u1 == u2 && cantidadDeAmigos red u1 > 0 = True
     | sonAmigos u1 u2 red = True
     | amigosDe red u2 == [] = False 
     | otherwise = hayCadenaDeAmigos (eliminarRelacionYUser red u1) (amigosDe red u1) u2
