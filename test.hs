@@ -46,7 +46,7 @@ testcantidadDeAmigos = test [
 
 testusuarioConMasAmigos = test [
     usuarioConMasAmigos redUno ~?= usuario2, -- Caso que puede devolver un único valor
-    usuarioConMasAmigos redDos ~?= usuario1 -- Caso que puede devolver más de un valor (usuario1, usuario2 o usuario3)
+    expectAny (usuarioConMasAmigos redDos) [usuario1, usuario2, usuario3] -- Caso que puede devolver más de un valor
     ]
 
 testestaRobertoCarlos = test [
@@ -89,6 +89,8 @@ testExisteSecuenciaDeAmigos = test [
     existeSecuenciaDeAmigos redDos usuario1 usuario7 ~?= False, -- Caso uno de los usuarios sin relaciones
     existeSecuenciaDeAmigos redDos usuario7 usuario1 ~?= False -- Caso uno de los usuarios sin relaciones invertido
     ]
+
+expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
 
 -- Datos:
 usuario1 = (1, "Cami")
